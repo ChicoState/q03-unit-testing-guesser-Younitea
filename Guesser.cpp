@@ -19,7 +19,7 @@ unsigned int Guesser::distance(string guess){
   int distance = 0;
   int g_num = guess.length();
   int s_num = m_secret.length();
-  int size_dif = labs(g_num - s_num);
+  int size_dif = abs(g_num - s_num);
   if(size_dif >= s_num)
     return s_num;
   //setting the for loop length
@@ -60,11 +60,15 @@ Guesser::Guesser(string secret){
    and the secret.
    */
 bool Guesser::match(string guess){
-  if(m_remaining == 0 || m_locked)
+  if(m_remaining == 0 || m_locked){
+    if(m_remaining > 0)
+      m_remaining--;
     return false;
+  }
   int dist = distance(guess);
   if(dist > 2){
     m_locked = true;
+    m_remaining--;
     return false;
   }
   if(guess == m_secret){

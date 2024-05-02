@@ -284,3 +284,20 @@ TEST(GuesserTest, keep_guesses_after_lock)
   rem = guess.remaining();
   ASSERT_EQ(1,rem);
 }
+
+TEST(GuesserTest, zero_guesses)
+{
+  std::string input = "abcde";
+  std::string close = "abcd";
+  Guesser guess(input);
+  bool act = guess.match(close);
+  act = guess.match(close);
+  act = guess.match(close);
+  int rem = guess.remaining();
+  EXPECT_EQ(0,rem);
+  act = guess.match(close);
+  rem = guess.remaining();
+  EXPECT_EQ(0,rem);
+  act = guess.match(input);
+  ASSERT_EQ(0,rem);
+}
